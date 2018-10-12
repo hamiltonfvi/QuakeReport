@@ -2,7 +2,6 @@ package com.example.android.quakereport;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,24 +16,25 @@ public class EarthquakeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_earthquake);
 
         // Create a fake list of earthquake locations.
-        ArrayList<String> earthquakes = new ArrayList<>();
-        earthquakes.add("San Francisco");
-        earthquakes.add("London");
-        earthquakes.add("Tokyo");
-        earthquakes.add("Mexico City");
-        earthquakes.add("Moscow");
-        earthquakes.add("Rio de Janeiro");
-        earthquakes.add("Paris");
+        final ArrayList<Earthquake> earthquakes = new ArrayList<>();
+        earthquakes.add(new Earthquake("5.1", "San Francisco", "Feb 20, 2016"));
+        earthquakes.add(new Earthquake("6.6", "London", "Dec 15, 2012"));
+        earthquakes.add(new Earthquake("2.3", "Tokyo", "Jan 01, 2013"));
+        earthquakes.add(new Earthquake("4.4", "Mexico City", "May 05, 2015"));
+        earthquakes.add(new Earthquake("2.3", "Moscow", "Oct 12, 2018"));
+        earthquakes.add(new Earthquake("1.5", "Rio de Janeiro", "March 14, 2014"));
+        earthquakes.add(new Earthquake("4.1", "Paris", "Apr 30, 2012"));
 
         // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = findViewById(R.id.list);
+        QuakeAdapter adapter = new QuakeAdapter(this, earthquakes);
 
-        // Create a new {@link ArrayAdapter} of earthquakes
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getApplicationContext(), android.R.layout.simple_list_item_1, earthquakes);
+        // Create a new adapter that takes the list of the earthquakes as input.
+        ListView listView = findViewById(R.id.listview_earthquake);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(adapter);
+        listView.setAdapter(adapter);
+
     }
+
 }
