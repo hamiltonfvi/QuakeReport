@@ -6,25 +6,32 @@
     android:orientation="horizontal"
     android:padding="16dp">
 
-            <TextView
-                android:id="@+id/magnitude_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="5.1" />
+    <TextView
+        android:id="@+id/magnitude_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="5.1" />
 
-            <TextView
-                android:id="@+id/location_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="San Francisco, CA" />
+    <TextView
+        android:id="@+id/location_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="San Francisco, CA" />
 
-            <TextView
-                android:id="@+id/date_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="May 9, 2012" />
+    <TextView
+        android:id="@+id/date_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="May 9, 2012" />
+
+    <TextView
+        android:id="@+id/time_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="3:00 PM" />
 
 </LinearLayout>
