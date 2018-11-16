@@ -1,12 +1,14 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.Intent;
+import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,17 +22,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Loader;
-
-public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquake>> {
+public class EarthquakeActivity extends AppCompatActivity
+        implements LoaderCallbacks<List<Earthquake>> {
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
 
-    /**
-     * URL for earthquake data from the USGS dataset
-     */
+    /** URL for earthquake data from the USGS dataset */
     private static final String USGS_REQUEST_URL =
-            "http://earthquake.usgs.gov/fdsnws/event/1/query";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query";
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
@@ -38,14 +37,10 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
      */
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
-    /**
-     * Adapter for the list of earthquakes
-     */
+    /** Adapter for the list of earthquakes */
     private QuakeAdapter mAdapter;
 
-    /**
-     * TextView that is displayed when the list is empty
-     */
+    /** TextView that is displayed when the list is empty */
     private TextView mEmptyStateTextView;
 
     @Override
@@ -53,10 +48,10 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake);
 
-        // Create a new adapter that takes the list of the earthquakes as input.
-        ListView earthquakeListView = findViewById(R.id.listview_earthquake);
+        // Find a reference to the {@link ListView} in the layout
+        ListView earthquakeListView = (ListView) findViewById(R.id.listview_earthquake);
 
-        mEmptyStateTextView = findViewById(R.id.empty_view);
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
 
         // Create a new adapter that takes an empty list of earthquakes as input
@@ -70,18 +65,17 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         // to open a website with more information about the selected earthquake.
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current earthquake that was clicked on
                 Earthquake currentEarthquake = mAdapter.getItem(position);
 
-                // Covert the String URL into a URI object (to pass into the Intent constructor)
+                // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
 
                 // Create a new intent to view the earthquake URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
 
-                //Send the intent to launch a new activity
+                // Send the intent to launch a new activity
                 startActivity(websiteIntent);
             }
         });
@@ -95,7 +89,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
-
             // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
@@ -140,7 +133,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
-
         // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_spinner);
         loadingIndicator.setVisibility(View.GONE);
@@ -165,9 +157,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    // This method initialize the contents of the Activity's options menu.
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the Options Menu we specified in XML
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -183,4 +173,3 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         return super.onOptionsItemSelected(item);
     }
 }
-

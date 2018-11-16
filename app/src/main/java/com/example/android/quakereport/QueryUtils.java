@@ -21,11 +21,9 @@ import java.util.List;
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
-    public final class QueryUtils {
+public final class QueryUtils {
 
-    /**
-     * Tag for the log messages
-     */
+    /** Tag for the log messages */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
@@ -42,6 +40,7 @@ import java.util.List;
     public static List<Earthquake> fetchEarthquakeData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
+
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
@@ -49,8 +48,10 @@ import java.util.List;
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
+
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
         List<Earthquake> earthquakes = extractFeatureFromJson(jsonResponse);
+
         // Return the list of {@link Earthquake}s
         return earthquakes;
     }
@@ -167,10 +168,10 @@ import java.util.List;
                 JSONObject properties = currentEarthquake.getJSONObject("properties");
 
                 // Extract the value for the key called "mag"
-                double mag = properties.getDouble("mag");
+                double magnitude = properties.getDouble("mag");
 
                 // Extract the value for the key called "place"
-                String place = properties.getString("place");
+                String location = properties.getString("place");
 
                 // Extract the value for the key called "time"
                 long time = properties.getLong("time");
@@ -180,7 +181,7 @@ import java.util.List;
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
                 // and url from the JSON response.
-                Earthquake earthquake = new Earthquake(mag, place, time, url);
+                Earthquake earthquake = new Earthquake(magnitude, location, time, url);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.
                 earthquakes.add(earthquake);
@@ -196,5 +197,4 @@ import java.util.List;
         // Return the list of earthquakes
         return earthquakes;
     }
-
 }
