@@ -25,8 +25,6 @@ import java.util.List;
 public class EarthquakeActivity extends AppCompatActivity
         implements LoaderCallbacks<List<Earthquake>> {
 
-    private static final String LOG_TAG = EarthquakeActivity.class.getName();
-
     /** URL for earthquake data from the USGS dataset */
     private static final String USGS_REQUEST_URL =
             "https://earthquake.usgs.gov/fdsnws/event/1/query";
@@ -49,9 +47,9 @@ public class EarthquakeActivity extends AppCompatActivity
         setContentView(R.layout.activity_earthquake);
 
         // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.listview_earthquake);
+        ListView earthquakeListView = findViewById(R.id.listview_earthquake);
 
-        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        mEmptyStateTextView = findViewById(R.id.empty_view);
         earthquakeListView.setEmptyView(mEmptyStateTextView);
 
         // Create a new adapter that takes an empty list of earthquakes as input
